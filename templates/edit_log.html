@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veri Düzenle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Veri Düzenle</h1>
+
+        <h2>{{ record.plant_name }} - {{ record.latin_name }}</h2>
+        <p><strong>Tarih:</strong> {{ record.date }}</p>
+        <p><strong>Olay:</strong> {{ record.event }}</p>
+        <p><strong>Notlar:</strong> {{ record.notes }}</p>
+
+        <h3>Yeni Veri Gir</h3>
+        <form action="/log/{{ index }}" method="POST">
+            <input type="text" name="date" placeholder="Tarih" required><br>
+            <input type="text" name="event" placeholder="Olay" required><br>
+            <textarea name="notes" placeholder="Notlar" required></textarea><br>
+            <input type="text" name="plant_name" placeholder="Sebze/Meyve Adı" required><br>
+            <input type="text" name="latin_name" placeholder="Latin Adı" required><br>
+            <input type="text" name="sowing_date" placeholder="Ekim Tarihi" required><br>
+            <input type="text" name="water_amount" placeholder="Verilen Su Miktarı" required><br>
+            <input type="text" name="weather" placeholder="Hava Durumu" required><br>
+            <input type="text" name="humidity" placeholder="Nem Oranı" required><br>
+            <button type="submit">Kaydet</button>
+        </form>
+
+        <h2>Geçmiş Veriler</h2>
+        <ul>
+            {% for entry in record.history %}
+            <li>{{ entry.date }} - {{ entry.water_amount }} L su verildi</li>
+            {% endfor %}
+        </ul>
+
+        <a href="/log">Geri Dön</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Veri Düzenle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Veri Güncelle</h1>
+    <form action="/log/{{ id }}" method="POST">
+        <label for="date">Tarih:</label>
+        <input type="text" id="date" name="date" value="{{ entry.date }}" required>
+
+        <label for="event">Olay:</label>
+        <input type="text" id="event" name="event" value="{{ entry.event }}" required>
+
+        <label for="notes">Notlar:</label>
+        <textarea id="notes" name="notes" required>{{ entry.notes }}</textarea>
+
+        <label for="plant_name">Sebze Adı:</label>
+        <input type="text" id="plant_name" name="plant_name" value="{{ entry.plant_name }}" required>
+
+        <label for="latin_name">Latincesi:</label>
+        <input type="text" id="latin_name" name="latin_name" value="{{ entry.latin_name }}" required>
+
+        <label for="sowing_date">Ekim Tarihi:</label>
+        <input type="text" id="sowing_date" name="sowing_date" value="{{ entry.sowing_date }}" required>
+
+        <label for="water_amount">Su Miktarı:</label>
+        <input type="text" id="water_amount" name="water_amount" value="{{ entry.water_amount }}" required>
+
+        <label for="weather">Hava Durumu:</label>
+        <input type="text" id="weather" name="weather" value="{{ entry.weather }}" required>
+
+        <label for="humidity">Nem Oranı:</label>
+        <input type="text" id="humidity" name="humidity" value="{{ entry.humidity }}" required>
+
+        <button type="submit">Güncelle</button>
+    </form>
+</body>
+</html>

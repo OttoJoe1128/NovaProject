@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ entry.plant_name }} - Günlük Takip</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ entry.plant_name }} ({{ entry.latin_name }})</h1>
+        <p><strong>Ekildiği Tarih:</strong> {{ entry.sowing_date }}</p>
+        <p><strong>Olay:</strong> {{ entry.event }}</p>
+        <p><strong>Not:</strong> {{ entry.notes }}</p>
+
+        <hr>
+        <h2>📅 Günlük Takip</h2>
+        <form method="post">
+            <textarea name="note" placeholder="Yeni not..." required></textarea><br>
+            <input type="number" name="water_amount" placeholder="Su miktarı (ml)">
+            <input type="number" name="humidity" placeholder="Nem (%)">
+            <button type="submit">Kaydet</button>
+        </form>
+
+        <h3>Geçmiş Notlar</h3>
+        <ul>
+            {% for item in entry.history %}
+                <li><strong>{{ item.date }}</strong>: {{ item.note }} | Su: {{ item.water_amount }}ml | Nem: {{ item.humidity }}%</li>
+            {% endfor %}
+        </ul>
+
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const data = {
+        labels: {{ entry.history | map(attribute='date') | list | safe }},
+        datasets: [{
+            label: 'Su Miktarı (ml)',
+            data: {{ entry.history | map(attribute='water_amount') | list | safe }},
+            borderColor: 'blue',
+            fill: false
+        },
+        {
+            label: 'Nem (%)',
+            data: {{ entry.history | map(attribute='humidity') | list | safe }},
+            borderColor: 'green',
+            fill: false
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'line',
+        data: data
+    });
+    </script>
+</body>
+</html>
