@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Ecosystem</title>
+</head>
+<body>
+    <h1>📊 Nova Ekosistem Analizi</h1>
+
+    <form method="post">
+        <label for="data_input">Verileri gir (virgülle ayır):</label><br>
+        <input type="text" id="data_input" name="data_input" style="width: 300px;">
+        <button type="submit">Analiz Et</button>
+    </form>
+
+    {% if result %}
+        <h2>Sonuçlar</h2>
+        <ul>
+            {% for key, value in result.items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if plot_html %}
+        <h2>Grafik</h2>
+        {{ plot_html|safe }}
+    {% endif %}
+</body>
+</html>
